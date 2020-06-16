@@ -11,23 +11,20 @@ class Region(Base):
     region_name = Column(String, unique=True)
 
     def __repr__(self):
-        return "<State(state_name='%s')>" % (self.state_name)
+        return "<Region(region_name='%s')>" % (self.region_name)
 
 
 class Station(Base):
     __tablename__ = 'Station'
-    __table_args__ = (
-        UniqueConstraint('state_id', 'county_name', name='unique_county_state'),
-    )
     id = Column(Integer, primary_key=True)
-    station_name = Column(String)
+    station_name = Column(String, unique=True)
     total_1819 = Column(Integer)
     region = relation("Region", backref = "Station")
     region_id = Column(Integer, ForeignKey('Region.id'))
 
 
     def __repr__(self):
-        return "<County(county_name='%s')>" % (self.county_name)
+        return "<Station(station_name='%s')>" % (self.station_name)
 
 
 
