@@ -6,6 +6,8 @@ Setup: Requires python 3
 
 Install dependencies: pip install xlrd
 
+Create csv file from xlsx workbook data: csv_import.py
+
 
 Description of Files:
 
