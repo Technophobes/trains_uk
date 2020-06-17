@@ -11,11 +11,16 @@ from pandas import *
 #         print(target_sheet.row_values(row))
     
 
-xlsx = ExcelFile('estimates-of-station-usage-2018-19.xlsx')
-df = xlsx.parse(xlsx.sheet_names[2])
+xlsx = ExcelFile('short-station-usage.xlsx')
+# for certain sheet: df = xlsx.parse(xlsx.sheet_names[2])
+df = xlsx.parse()
 
-empty_dict = {}
 def wrangle(row):
+    # requests.post
+    # pload_genus = {"scientific_name": input_dict["genus_scientific"]}
+    # genus_request = requests.post("http://127.0.0.1:5000/genus" , json=pload_genus)
+    # genus_id = genus_request.text
+    # print(genus_id)
     return row.to_dict()
 
 request_bodies = df.apply(wrangle, axis=1).tolist()
