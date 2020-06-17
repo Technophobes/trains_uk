@@ -18,7 +18,7 @@ def add_region():
 	request_dict = request.get_json()
 	try:
 		region_instance = Region()
-		region_instance.region = request_dict["Region"]
+		region_instance.region_name = request_dict["Region"]
 		session.add(region_instance)
 		session.commit()
 		return jsonify(region_instance.id)
@@ -31,13 +31,13 @@ def add_station():
 	session = dbconnect()
 	request_dict = request.get_json()
 	try:
-		region_instance = session.query(Region).filter(Region.region_name == request_dict["Region"]).one()
+		# ["Region"]["id"] is then called in csv_import.py within the dict
+		region_instance = session.query(Region).filter(Region.id == request_dict["Region"]["id"]).one()
 	except:
 		return "Region does not exist, please add it", 400
 
 	try:
 		station = Station()
-		station.region = request_dict["Region"]
 		station.station_name = request_dict["Station Name"]
 		station.total_1819 = request_dict["1819 Entries & Exits"]
 		station.region_id = region_instance.id
