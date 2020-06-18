@@ -1,8 +1,9 @@
-# How to read the xls file and saves the worksheet with data as a csv
-# https://stackoverflow.com/questions/10802417/how-to-save-an-excel-worksheet-as-csv
 
 import requests
 from pandas import *
+
+# This will show us all the headers of the columns
+# print(df.head())
 
 
 pload_test = {
@@ -37,20 +38,23 @@ pload_test = {
 	# 'Source for explanation of large change 1819': nan
 }
 
-# Here is where we would 
-xlsx = ExcelFile('short-station-usage.xlsx')
+# Here we use pandas to create dict from excel data by creating a pandas dataframe
 # for certain sheet: df = xlsx.parse(xlsx.sheet_names[2])
+xlsx = ExcelFile('short-station-usage.xlsx')
 df = xlsx.parse()
+# added df.fillna(0) to replace all NaN elements with 0s
+print(df.fillna(0).to_dict())
 
 # We got one instance to work for the pload_region dictionary.
 # Now we need to put it in the function. Do we need to turn the dataframe into a list of dicts?
 # Do we need to bring the function to the dataframe?
+
+# BELOW ISN'T WORKING WITH FUNCTION
 def wrangle(row):
     for row in df:
         pload_region = {"Region": pload_test["Region"]}
         region_request = requests.post("http://127.0.0.1:5000/region" , json=pload_region)
         region_id = region_request.text
-
 
         pload_station = {"Station Name": pload_test["Station Name"], "1819 Entries & Exits" : pload_test["1819 Entries & Exits"], "Region" : { "id" : region_id}}
         station_request = requests.post("http://127.0.0.1:5000/station" , json=pload_station)
@@ -67,12 +71,4 @@ def wrangle(row):
 
 
 
-
-
-
-
-
-
-# This will show us all the headers of the columns
-# print(df.head())
 
