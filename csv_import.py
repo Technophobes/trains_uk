@@ -1,5 +1,6 @@
 
 import requests
+import pandas as pd 
 from pandas import *
 
 # This will show us all the headers of the columns
@@ -40,32 +41,23 @@ pload_test = {
 
 # Here we use pandas to create dict from excel data by creating a pandas dataframe
 # for certain sheet: df = xlsx.parse(xlsx.sheet_names[2])
-xlsx = ExcelFile('short-station-usage.xlsx')
-df = xlsx.parse()
+# xlsx = ExcelFile('short-station-usage.xlsx')
+# df = xlsx.parse()
 # added df.fillna(0) to replace all NaN elements with 0s
-print(df.fillna(0).to_dict())
+#print(df.fillna(0).to_dict())
+df = pd.read_excel('short-station-usage.xlsx')
 
-# We got one instance to work for the pload_region dictionary.
-# Now we need to put it in the function. Do we need to turn the dataframe into a list of dicts?
-# Do we need to bring the function to the dataframe?
+def wrangle(input_object):
+	input_dict = input_object.to_dict()
+	pload_region = {"Region": input_dict["Region"]}
+	region_request = requests.post("http://127.0.0.1:5000/region" , json=pload_region)
 
-# BELOW ISN'T WORKING WITH FUNCTION
-def wrangle(row):
-    for row in df:
-        pload_region = {"Region": pload_test["Region"]}
-        region_request = requests.post("http://127.0.0.1:5000/region" , json=pload_region)
-        region_id = region_request.text
+	input_dict["region_id"] = region_request.text
+	requests.post("http://127.0.0.1:5000/station" , json=input_dict)
 
-        pload_station = {"Station Name": pload_test["Station Name"], "1819 Entries & Exits" : pload_test["1819 Entries & Exits"], "Region" : { "id" : region_id}}
-        station_request = requests.post("http://127.0.0.1:5000/station" , json=pload_station)
-        return row.to_dict()
 
-# The following 5 lines were from Tuesday, June 17:
-# def wrangle(row):
-#     return row.to_dict()
+df.apply(wrangle, axis=1)
 
-# request_bodies = df.apply(wrangle, axis=1).tolist()
-# print(request_bodies)
 
 
 

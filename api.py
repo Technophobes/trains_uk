@@ -32,7 +32,7 @@ def add_station():
 	request_dict = request.get_json()
 	try:
 		# ["Region"]["id"] is then called in csv_import.py within the dict
-		region_instance = session.query(Region).filter(Region.id == request_dict["Region"]["id"]).one()
+		region_instance = session.query(Region).filter(Region.id == request_dict["region_id"]).one()
 	except:
 		return "Region does not exist, please add it", 400
 
@@ -40,13 +40,15 @@ def add_station():
 		station = Station()
 		station.station_name = request_dict["Station Name"]
 		station.total_1819 = request_dict["1819 Entries & Exits"]
-		station.region_id = region_instance.id
+		station.region = region_instance
 		session.add(station)
 		session.commit()
 		return jsonify(station.id)
 	except exc.IntegrityError:
 		session.rollback()
 		return "already exists", 400
+
+#{"region_id" : 3 , "Station Name": "london"}
 
 # to get the error message on the url
 if __name__ == '__main__':
