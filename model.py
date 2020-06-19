@@ -20,13 +20,38 @@ class Station(Base):
     station_name = Column(String, unique=True)
     total_1819 = Column(Integer)
     region = relation("Region", backref = "Station")
+    # don't ever use the attribute .region_id (if you see the ForeignKey, don't use these attributes)
     region_id = Column(Integer, ForeignKey('Region.id'))
-
+    Local_Authority = Column(String)
+	Constituency = Column(String)
+	NUTS2_Spatial_Unit = Column(String)
+	NUTS2_Spatial_Unit_Code = Column(String)
+	OS_Grid_Easting = Column(String)
+	OS_Grid_Northing = Column(String)
+	Station_Facility_Owner = Column(String)
+	Station_Group = Column(String)
+	PTE_Urban_Area_Station = Column(String)
+	London_Travelcard_Area = Column(String)
+	Network_Rail_Region_of_station = Column(String)
+	CRP_Line_Designation = Column(String)
+	Entries_Exits_Full = Column(Integer)
+    Entries_Exits_Reduced = Column(Integer)
+	Entries_Exits_Season = Column(Integer)
+    Entries_Exits_1819 = Column(Integer)
+	Entries_Exits_1718 = Column(Integer)
+	Interchanges_1819 = Column(Integer)
+	Entries_Exits_1819 = Column(Integer)
+	Entries_Exits_1718 = Column(Integer)
+	Large_station_change_flag = Column(Float)
+	Small_station_change_flagm = Column(Float)
+	%_Change = Column(Float)
+	Explanation_of_large_change_1819 = Column(Integer)
+    Source_for_explanation_of_large_change_1819 = Column(Integer)
 
     def __repr__(self):
         return "<Station(station_name='%s')>" % (self.station_name)
 
-
+#class Station Facility Owner
 
 # A bunch of stuff to make the connection to the database work.
 def dbconnect():
