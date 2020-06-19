@@ -52,13 +52,16 @@ def wrangle(input_object):
 	pload_region = {"Region": input_dict["Region"]}
 	region_request = requests.post("http://127.0.0.1:5000/region" , json=pload_region)
 
+
 	input_dict["region_id"] = region_request.text
 	requests.post("http://127.0.0.1:5000/station" , json=input_dict)
 
 
-df.apply(wrangle, axis=1)
+# df.apply(wrangle, axis=1)
 
-
+#sort the dataframe
+df.sort_values(by='Region', inplace=True)
+print(df[["Region"]])
 
 
 
