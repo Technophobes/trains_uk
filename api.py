@@ -31,7 +31,6 @@ def add_station():
 	session = dbconnect()
 	request_dict = request.get_json()
 	try:
-		# ["Region"]["id"] is then called in csv_import.py within the dict
 		region_instance = session.query(Region).filter(Region.id == request_dict["region_id"]).one()
 	except:
 		return "Region does not exist, please add it", 400
@@ -47,6 +46,17 @@ def add_station():
 	except exc.IntegrityError:
 		session.rollback()
 		return "already exists", 400
+
+@app.route('/region/<search_term>', methods=['GET'])
+def get_region(search_term):
+	session = dbconnect()
+	try:
+		region_instance = session.query(Region).filter(Region.region_name == search_term).one()
+		return jsonify(region_instance.id), 200
+	except:
+		return "Region doesn't exist in database", 400
+
+
 
 #{"region_id" : 3 , "Station Name": "london"}
 
