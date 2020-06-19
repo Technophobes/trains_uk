@@ -52,10 +52,12 @@ def wrangle(input_object):
 	pload_region = {"Region": input_dict["Region"]}
 	region_request = requests.post("http://127.0.0.1:5000/region" , json=pload_region)
 
+	return region_request.text
 
+def addStation(input_dict, input_region_id)
 	input_dict["region_id"] = region_request.text
 	requests.post("http://127.0.0.1:5000/station" , json=input_dict)
-
+	
 
 # df.apply(wrangle, axis=1)
 
@@ -64,6 +66,18 @@ df.sort_values(by='Region', inplace=True)
 print(df[["Region"]])
 
 
+# add region
+# add Station
+# try if region exists 
+# if yes you keep the previous region id 
+# add station 
 
+input_dict = input_object.to_dict()
+pload_region = {"Region": input_dict["Region"]}
+region_request = requests.post("http://127.0.0.1:5000/region" , json=pload_region)
+
+if 
+	input_dict["region_id"] = region_request.text
+if 400 
 
 
