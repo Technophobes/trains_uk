@@ -5,6 +5,7 @@ from sqlalchemy.orm import relation, sessionmaker
 
 Base = declarative_base()
 
+# Region is the parent class of this data set
 class Region(Base):
     __tablename__ = 'Region'
     id = Column(Integer, primary_key=True)
@@ -13,7 +14,7 @@ class Region(Base):
     def __repr__(self):
         return "<Region(region_name='%s')>" % (self.region_name)
 
-
+# Station class is a child of Region
 class Station(Base):
     __tablename__ = 'Station'
     id = Column(Integer, primary_key=True)
@@ -21,6 +22,8 @@ class Station(Base):
     total_1819 = Column(Integer)
     region = relation("Region", backref = "Station")
     region_id = Column(Integer, ForeignKey('Region.id'))
+    NLC = Column(Integer)
+    TLC = Column(String)
     Local_Authority = Column(String)
     Constituency = Column(String)
     NUTS2_Spatial_Unit = Column(String)
@@ -52,8 +55,7 @@ class Station(Base):
         return "<Station(station_name='%s')>" % (self.station_name)
 
 
-
-# A bunch of stuff to make the connection to the database work.
+# This code block provides the connection to the database
 def dbconnect():
     engine = create_engine('sqlite:///stations.db', echo=False)
     Base.metadata.create_all(engine)

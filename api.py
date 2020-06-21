@@ -1,7 +1,5 @@
 # This api will import data to the database
 
-# Every request will look like below. Api needs to handle this
-
 from flask import Flask
 from flask import jsonify
 from flask import request
@@ -39,10 +37,12 @@ def add_station():
 		station = Station()
 		station.station_name = request_dict["Station Name"]
 		station.total_1819 = request_dict["1819 Entries & Exits"]
+		station.NLC = request_dict["NLC"]
+		station.TLC = request_dict["TLC"]
 		station.Local_Authority = request_dict["Local Authority"]
 		station.Constituency = request_dict["Constituency"]
 		station.NUTS2_Spatial_Unit = request_dict["NUTS2 Spatial Unit"]
-		station.NUTS2_Spatial_Unit_Code = request_dict["NUTS2 Spatial Unit Code"]
+		station.NUTS2_Spatial_Unit_Code = request_dict["NUTS2 Spatial_Unit Code"]
 		station.OS_Grid_Easting = request_dict["OS Grid Easting"]
 		station.OS_Grid_Northing = request_dict["OS Grid Northing"]
 		station.Station_Facility_Owner = request_dict["Station Facility Owner"]
@@ -51,9 +51,9 @@ def add_station():
 		station.London_Travelcard_Area = request_dict["London Travelcard Area"]
 		station.Network_Rail_Region_of_station = request_dict["Network Rail Region of station"]
 		station.CRP_Line_Designation = request_dict["CRP Line Designation"]
-		station.Entries_Exits_Full = request_dict["Entries & Exits Full"]
-		station.Entries_Exits_Reduced = request_dict["Entries & Exits Reduced"]
-		station.Entries_Exits_Season = request_dict["Entries & Exits Season"]
+		station.Entries_Exits_Full = request_dict["Entries & Exits_Full"]
+		station.Entries_Exits_Reduced = request_dict["Entries & Exits_Reduced"]
+		station.Entries_Exits_Season = request_dict["Entries & Exits_Season"]
 		station.Entries_Exits_1819 = request_dict["1819 Entries & Exits"]
 		station.Entries_Exits_1718 = request_dict["1718 Entries & Exits"]
 		station.Interchanges_1819 = request_dict["1819 Interchanges"]
@@ -81,11 +81,19 @@ def get_region(search_term):
 	except:
 		return "Region doesn't exist in database", 400
 
+@app.route('/station/<search_term>', methods=['GET'])
+def get_station(search_term):
+	session = dbconnect()
+	# try:
+	# 	region_instance = session.query(Region).filter(Region.region_name == search_term).one()
+	# 	return jsonify(region_instance.id), 200
+	# except:
+	# 	return "Region doesn't exist in database", 400
 
 
 #{"region_id" : 3 , "Station Name": "london"}
 
-# to get the error message on the url
+# This provides the error message on the url
 if __name__ == '__main__':
 
 	app.run(debug=True)
