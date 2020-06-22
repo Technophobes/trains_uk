@@ -84,6 +84,20 @@ def get_region(search_term):
 @app.route('/station/<search_term>', methods=['GET'])
 def get_station(search_term):
 	session = dbconnect()
+	return_list = []
+    if search_term == "all":
+        for row in session.query(Species).all():
+            row_dict = row.__dict__
+            row_dict.pop("_sa_instance_state")
+            return_list.append(row_dict)
+    else:
+        for row in session.query(Station).filter(Station.id == search_term).all():
+            row_dict = row.__dict__
+            row_dict.pop("_sa_instance_state")
+            return_list.append(row_dict)
+    return jsonify(return_list)
+
+# From the Region GET api endpoint
 	# try:
 	# 	region_instance = session.query(Region).filter(Region.region_name == search_term).one()
 	# 	return jsonify(region_instance.id), 200
@@ -91,7 +105,8 @@ def get_station(search_term):
 	# 	return "Region doesn't exist in database", 400
 
 
-#{"region_id" : 3 , "Station Name": "london"}
+
+
 
 # This provides the error message on the url
 if __name__ == '__main__':

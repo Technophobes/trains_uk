@@ -14,7 +14,7 @@ class Region(Base):
     def __repr__(self):
         return "<Region(region_name='%s')>" % (self.region_name)
 
-# Station class is a child of Region
+# The Station class is a child of Region
 class Station(Base):
     __tablename__ = 'Station'
     id = Column(Integer, primary_key=True)
@@ -55,7 +55,7 @@ class Station(Base):
         return "<Station(station_name='%s')>" % (self.station_name)
 
 
-# This code block provides the connection to the database
+# This provides the connection to the database
 def dbconnect():
     engine = create_engine('sqlite:///stations.db', echo=False)
     Base.metadata.create_all(engine)
