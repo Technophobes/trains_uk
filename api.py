@@ -85,17 +85,17 @@ def get_region(search_term):
 def get_station(search_term):
 	session = dbconnect()
 	return_list = []
-    if search_term == "all":
-        for row in session.query(Species).all():
-            row_dict = row.__dict__
-            row_dict.pop("_sa_instance_state")
-            return_list.append(row_dict)
-    else:
-        for row in session.query(Station).filter(Station.id == search_term).all():
-            row_dict = row.__dict__
-            row_dict.pop("_sa_instance_state")
-            return_list.append(row_dict)
-    return jsonify(return_list)
+	if search_term == "all":
+		for row in session.query(Station).all():
+			row_dict = row.__dict__
+			row_dict.pop("_sa_instance_state")
+			return_list.append(row_dict)
+	else:
+		for row in session.query(Station).filter(Station.station_name == search_term).all():
+			row_dict = row.__dict__
+			row_dict.pop("_sa_instance_state")
+			return_list.append(row_dict)
+	return jsonify(return_list)
 
 # From the Region GET api endpoint
 	# try:

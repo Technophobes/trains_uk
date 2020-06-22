@@ -4,9 +4,15 @@ from pandas import *
 
 
 # The xlsx containing all the station data is converted to a dataframe using pandas
-df = pd.read_excel('short-station-usage.xlsx')
+# sheet_name is a parameter, included within the parentheses
+df = pd.read_excel('estimates-of-station-usage-2018-19.xlsx', sheet_name=2)
 
-# The wrangle function converts the input object to a dict, gets the region's id or posts the region if it doesn't yet exist, then posts the station and all its respective data
+# print(df.head())
+
+# The wrangle function converts the input object to a dict
+# gets the region's id or posts the region if it doesn't yet exists
+# then posts the station and all its respective data
+# ["region_id"] comes from the column in the Table created by the Station class, creating the relation between the 2 tables
 def wrangle(input_object):
 	input_dict = input_object.to_dict()
 	pload_region = {"Region": input_dict["Region"]}
