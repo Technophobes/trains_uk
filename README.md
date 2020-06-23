@@ -1,6 +1,8 @@
 # Queue Branch.
+Install: `pip3 install rq redis`
 
 To start Redis install docker desktop and run `docker run -p6379:6379 redis`.
+
 
 To start the worker: `rq worker stations`
 
