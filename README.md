@@ -15,19 +15,20 @@ The api "stations" POST endpoint puts the request data on the queue.
 
 UK Train Stations Project
 
-Aim of the Project: Import train station data via the api
+Aim of the Project: Import train station data via the api to database
 
 Setup: Requires python 3
 
-Install dependencies: pip install xlrd
+Install dependencies: `pip install xlrd`
 
-Create csv file from xlsx workbook data: csv_import.py
 
 
 Description of Files:
 
-csv_import.py:
+csv_import.py: This file imports the data in the excel file and posts its contents (using the endpoints in api.py)
 
-model.py:
+model.py: The model contains the 2 classes, Region and Station.
 
-api.py:
+api.py: This file contains all api endpoints.
+
+station_queue.py: This file contains the function to add all stations to the queue that will be later added to the database.
