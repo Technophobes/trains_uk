@@ -69,15 +69,6 @@ def get_station(search_term):
 			return_list.append(row_dict)
 	return jsonify(return_list)
 
-# From the Region GET api endpoint
-	# try:
-	# 	region_instance = session.query(Region).filter(Region.region_name == search_term).one()
-	# 	return jsonify(region_instance.id), 200
-	# except:
-	# 	return "Region doesn't exist in database", 400
-
-
-
 
 
 # This provides the error message on the url
